@@ -169,26 +169,45 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
   });
-  function showLetterPaper() {
+  function getScaleForDevice() {
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+    const baseWidth = 650; 
+    const baseHeight = 950; 
+    const scaleX = viewportWidth / baseWidth;
+    const scaleY = viewportHeight / baseHeight;
 
+    return Math.min(scaleX, scaleY, 1);
+  }
+  
+  function showLetterPaper() {
+    const scale = getScaleForDevice(); // epic rescaler real
+  
     heartsCanvas.classList.add("blur-background");
     envelope.classList.add("blur-background");
   
-   
     letterPaper.style.visibility = "visible";
     letterPaper.style.opacity = "1";
-    letterPaper.style.transform = "translate(-50%, -50%) scale(1)";
+    letterPaper.style.transform = `translate(-50%, -50%) scale(${scale})`;
   }
+  
   function hideLetterPaper() {
-
     heartsCanvas.classList.remove("blur-background");
     envelope.classList.remove("blur-background");
   
- 
     letterPaper.style.visibility = "hidden";
     letterPaper.style.opacity = "0";
     letterPaper.style.transform = "translate(-50%, -50%) scale(0.8)";
   }
+  
+  window.addEventListener("resize", () => {
+    const scale = getScaleForDevice();
+  
+    if (letterPaper.style.visibility === "visible") {
+      letterPaper.style.transform = `translate(-50%, -50%) scale(${scale})`;
+    }
+  });
+  
   
 
 
