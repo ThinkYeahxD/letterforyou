@@ -1,0 +1,191 @@
+body {
+  margin: 0;
+  overflow: hidden;
+  background-color: #f3c4c4;
+  font-family: Arial, sans-serif;
+}
+
+canvas {
+  display: block;
+}
+
+#heartsCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+#message-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  font-size: 48px;
+  font-weight: bold;
+  color: #333;
+}
+
+.hidden {
+  display: none;
+}
+
+#envelope-container {
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh;
+opacity: 0;
+transition: opacity 1s ease-in-out;
+}
+
+#envelope-container.show {
+opacity: 1;
+}
+
+#envelope {
+width: 280px;
+height: 180px;
+border-bottom-left-radius: 6px;
+border-bottom-right-radius: 6px;
+background-color: #f9c5c8;
+box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.front {
+position: absolute;
+width: 0;
+height: 0;
+z-index: 3;
+}
+
+.flap {
+border-left: 140px solid transparent;
+border-right: 140px solid transparent;
+border-bottom: 82px solid transparent;
+border-top: 98px solid #ff6161;
+transform-origin: top;
+pointer-events: none;
+}
+.pocket {
+border-left: 140px solid #ff9999;
+border-right: 140px solid #ff9999;
+border-bottom: 90px solid #fd8787;
+border-top: 90px solid transparent;
+border-bottom-left-radius: 6px;
+border-bottom-right-radius: 6px;
+}
+.letter {
+position: relative;
+background-color: #f9c5c8;
+width: 90%;
+margin-left: auto;
+margin-right: auto;
+height: 90%;
+top: 5%;
+border-radius: 6px;
+box-shadow: 0 2px 26px rgba(0, 0, 0, 0.12);
+}
+.letter:after {
+content: "";
+position: absolute;
+top: 0;
+bottom: 0;
+left: 0;
+right: 0;
+background-image: linear-gradient(
+180deg,
+rgba(255, 255, 255, 0) 25%,
+rgba(239, 215, 239, 0.7) 55%,
+#eed7ef 100%
+);
+}
+.words {
+position: absolute;
+left: 10%;
+width: 80%;
+height: 14%;
+background-color: #fdb7ba;
+}
+
+.words.line1 {
+top: 15%;
+width: 20%;
+height: 7%;
+}
+
+.words.line2 {
+top: 30%;
+}
+
+.words.line3 {
+top: 50%;
+}
+
+.words.line4 {
+top: 70%;
+}
+
+.open .flap {
+transform: rotateX(180deg);
+transition: transform 0.4s ease, z-index 0.6s;
+z-index: 1;
+}
+
+.close .flap {
+transform: rotateX(0deg);
+transition: transform 0.4s 0.6s ease, z-index 1s;
+z-index: 5;
+}
+
+.close .letter {
+transform: translateY(0px);
+transition: transform 0.4s ease, z-index 1s;
+z-index: 1;
+}
+
+.open .letter {
+transform: translateY(-60px);
+transition: transform 0.4s 0.6s ease, z-index 0.6s;
+z-index: 2;
+}
+
+.letter-paper {
+position: fixed;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%) scale(0.8);
+padding:40px;
+width: 650px;
+height: 925px;
+font-size: 22px;
+font-family:  Arial, sans-serif;
+ text-align: justify;
+line-height: 40px;
+background-image: 
+repeating-linear-gradient(transparent 0 39px, #999 39px 40px, transparent 40px),
+linear-gradient(#eee, #edecee);
+background-repeat: no-repeat;
+background-size: 90% 100%, 100%;
+background-position: center 20px, 0 0;
+box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.2);
+box-sizing: border-box;
+z-index: 100;
+opacity: 0;
+visibility: hidden;
+transition: opacity 0.5s ease, transform 0.5s ease, visibility 0.5s;
+}
+
+.letter-paper.visible {
+opacity: 1;
+visibility: visible;
+transform: translate(-50%, -50%) scale(1);
+}
+
+#heartsCanvas.blur-background,
+#envelope-container.blur-background #envelope {
+filter: blur(2.4px);
+}
